@@ -1,0 +1,64 @@
+{
+  "timestamp": "2025-12-15T14:49:04.993544Z",
+  "cluster_info": {
+    "hostname": "computeinstance-e00e9ncccc9zh9nxw2",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "total_gpus": 8,
+    "gpu_model": "NVIDIA H100 80GB HBM3",
+    "cuda_version": "12.1",
+    "pytorch_version": "2.3.0+cu121",
+    "nccl_version": "2.20.5"
+  },
+  "results": {
+    "nccl_benchmark": {
+      "name": "nccl_benchmark",
+      "status": "PASS",
+      "metric_name": "all_reduce_bandwidth",
+      "metric_value": 442.21,
+      "metric_unit": "GB/s",
+      "duration_seconds": 5.13,
+      "details": {
+        "world_size": 8,
+        "results_by_size": [
+          {
+            "size_mb": 1,
+            "bandwidth_gbps": 41.95,
+            "latency_ms": 0.044
+          },
+          {
+            "size_mb": 10,
+            "bandwidth_gbps": 203.94,
+            "latency_ms": 0.09
+          },
+          {
+            "size_mb": 100,
+            "bandwidth_gbps": 387.05,
+            "latency_ms": 0.474
+          },
+          {
+            "size_mb": 1000,
+            "bandwidth_gbps": 442.21,
+            "latency_ms": 4.15
+          }
+        ]
+      }
+    },
+    "training_benchmark": {
+      "name": "training_benchmark",
+      "status": "PASS",
+      "metric_name": "tokens_per_second",
+      "metric_value": 331742.7,
+      "metric_unit": "tokens/s",
+      "duration_seconds": 7.17,
+      "details": {
+        "tokens_per_gpu": 41467.8,
+        "batch_size": 8,
+        "seq_length": 512,
+        "world_size": 8,
+        "num_steps": 50
+      }
+    }
+  },
+  "overall_status": "PASS"
+}

@@ -1,0 +1,126 @@
+{
+  "timestamp": "2025-12-15T14:48:42.706983Z",
+  "cluster_info": {
+    "hostname": "computeinstance-e00e9ncccc9zh9nxw2",
+    "nodes": 1,
+    "gpus_per_node": 8,
+    "total_gpus": 8,
+    "gpu_model": "NVIDIA H100 80GB HBM3",
+    "cuda_version": "12.1",
+    "pytorch_version": "2.3.0+cu121",
+    "nccl_version": "2.20.5"
+  },
+  "results": {
+    "gpu_health": {
+      "status": "PASS",
+      "message": "All GPUs healthy",
+      "gpus": [
+        {
+          "index": 0,
+          "name": "NVIDIA H100 80GB HBM3",
+          "memory_total_gb": 79.19,
+          "memory_free_gb": 79.19,
+          "cuda_version": "12.1",
+          "driver_version": "(9, 0)"
+        },
+        {
+          "index": 1,
+          "name": "NVIDIA H100 80GB HBM3",
+          "memory_total_gb": 79.19,
+          "memory_free_gb": 79.19,
+          "cuda_version": "12.1",
+          "driver_version": "(9, 0)"
+        },
+        {
+          "index": 2,
+          "name": "NVIDIA H100 80GB HBM3",
+          "memory_total_gb": 79.19,
+          "memory_free_gb": 79.19,
+          "cuda_version": "12.1",
+          "driver_version": "(9, 0)"
+        },
+        {
+          "index": 3,
+          "name": "NVIDIA H100 80GB HBM3",
+          "memory_total_gb": 79.19,
+          "memory_free_gb": 79.19,
+          "cuda_version": "12.1",
+          "driver_version": "(9, 0)"
+        },
+        {
+          "index": 4,
+          "name": "NVIDIA H100 80GB HBM3",
+          "memory_total_gb": 79.19,
+          "memory_free_gb": 79.19,
+          "cuda_version": "12.1",
+          "driver_version": "(9, 0)"
+        },
+        {
+          "index": 5,
+          "name": "NVIDIA H100 80GB HBM3",
+          "memory_total_gb": 79.19,
+          "memory_free_gb": 79.19,
+          "cuda_version": "12.1",
+          "driver_version": "(9, 0)"
+        },
+        {
+          "index": 6,
+          "name": "NVIDIA H100 80GB HBM3",
+          "memory_total_gb": 79.19,
+          "memory_free_gb": 79.19,
+          "cuda_version": "12.1",
+          "driver_version": "(9, 0)"
+        },
+        {
+          "index": 7,
+          "name": "NVIDIA H100 80GB HBM3",
+          "memory_total_gb": 79.19,
+          "memory_free_gb": 79.19,
+          "cuda_version": "12.1",
+          "driver_version": "(9, 0)"
+        }
+      ]
+    },
+    "matmul_benchmark": {
+      "name": "matmul_benchmark",
+      "status": "PASS",
+      "metric_name": "tflops",
+      "metric_value": 728.8,
+      "metric_unit": "TFLOPS",
+      "duration_seconds": 1.67,
+      "details": {
+        "results_by_size": [
+          {
+            "size": 4096,
+            "tflops": 728.8,
+            "time_per_op_ms": 0.189
+          },
+          {
+            "size": 8192,
+            "tflops": 673.61,
+            "time_per_op_ms": 1.632
+          },
+          {
+            "size": 16384,
+            "tflops": 669.78,
+            "time_per_op_ms": 13.133
+          }
+        ],
+        "dtype": "torch.bfloat16"
+      }
+    },
+    "memory_bandwidth": {
+      "name": "memory_bandwidth",
+      "status": "PASS",
+      "metric_name": "bandwidth",
+      "metric_value": 3.02,
+      "metric_unit": "TB/s",
+      "duration_seconds": 0.04,
+      "details": {
+        "size_gb": 1.0,
+        "iterations": 50
+      }
+    }
+  },
+  "overall_status": "PASS"
+}
