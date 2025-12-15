@@ -1,6 +1,6 @@
-# Nebius H100 8-GPU Benchmark Results
+# Nebius H100 8-GPU Benchmark
 
-This repository contains GPU cluster acceptance testing results for a single-node configuration with 8x NVIDIA H100 80GB GPUs on Nebius AI Cloud.
+GPU cluster testing and LLM fine-tuning on a single-node 8x NVIDIA H100 80GB configuration on Nebius AI Cloud.
 
 ## Cluster Configuration
 
@@ -13,7 +13,87 @@ This repository contains GPU cluster acceptance testing results for a single-nod
 | PyTorch | 2.3.0+cu121 |
 | NCCL | 2.20.5 |
 
-## Benchmark Results Summary
+## Repository Structure
+
+```
+.
+├── exercise1/                    # LLM Fine-Tuning for Function Calling
+│   ├── scripts/
+│   │   ├── train_function_calling.py
+│   │   ├── preprocess_data.py
+│   │   ├── evaluate.py
+│   │   └── train_job.sbatch
+│   ├── configs/
+│   │   ├── training_config.yaml
+│   │   └── ds_config_zero3.json
+│   └── terraform/
+│       ├── main.tf
+│       ├── variables.tf
+│       └── terraform.tfvars.example
+│
+├── exercise2/                    # GPU Cluster Acceptance Testing
+│   ├── scripts/
+│   │   └── benchmark.py
+│   ├── configs/
+│   │   └── benchmark_config.yaml
+│   ├── results/
+│   │   ├── benchmark_health.json
+│   │   ├── benchmark_single.json
+│   │   └── benchmark_distributed.json
+│   ├── tests/
+│   │   └── test_benchmark.py
+│   ├── k8s/
+│   │   └── benchmark-job.yaml
+│   ├── .github/workflows/
+│   │   └── ci.yml
+│   └── Dockerfile
+│
+└── README.md
+```
+
+## Exercise 1: LLM Fine-Tuning for Function Calling
+
+Fine-tuning Qwen2-7B on the Glaive function calling dataset using LoRA.
+
+### Model Configuration
+
+| Parameter | Value |
+|-----------|-------|
+| Base Model | Qwen/Qwen2-7B-Instruct |
+| Parameters | 7.7B total, 161M trainable (LoRA) |
+| LoRA Rank | 64 |
+| LoRA Alpha | 128 |
+| Precision | BF16 |
+
+### Training Configuration
+
+| Parameter | Value |
+|-----------|-------|
+| Batch Size | 2 per GPU |
+| Gradient Accumulation | 4 steps |
+| Effective Batch Size | 64 (8 GPUs) |
+| Learning Rate | 2e-5 |
+| Scheduler | Cosine |
+| Max Sequence Length | 4096 |
+
+### Running Training
+
+```bash
+cd exercise1
+
+# Single GPU
+python scripts/train_function_calling.py --config configs/training_config.yaml
+
+# Multi-GPU (8 GPUs)
+torchrun --nproc_per_node=8 scripts/train_function_calling.py \
+  --config configs/training_config.yaml
+```
+
+## Exercise 2: GPU Cluster Acceptance Testing
+
+Benchmark results for validating GPU cluster performance.
+
+### Benchmark Results Summary
 
 | Test | Result | Expected | Status |
 |------|--------|----------|--------|
@@ -22,8 +102,6 @@ This repository contains GPU cluster acceptance testing results for a single-nod
 | Memory Bandwidth | 3.02 TB/s | >3.0 TB/s | PASS |
 | NCCL AllReduce | 442.21 GB/s | >400 GB/s | PASS |
 | Training Throughput | 331,742 tokens/s | >2000/GPU | PASS |
-
-## Detailed Results
 
 ### Matrix Multiplication Benchmark (BF16)
 
@@ -42,42 +120,26 @@ This repository contains GPU cluster acceptance testing results for a single-nod
 | 100 MB | 387.05 GB/s | 0.474 ms |
 | 1 GB | 442.21 GB/s | 4.150 ms |
 
-### Training Benchmark
-
-| Parameter | Value |
-|-----------|-------|
-| Model | GPT-2 style transformer (12 layers, 768 hidden) |
-| Batch Size | 8 per GPU |
-| Sequence Length | 512 |
-| Total Throughput | 331,742.7 tokens/second |
-| Per-GPU Throughput | 41,467.8 tokens/second |
-
-## Running the Benchmark
-
-Single GPU test:
+### Running Benchmarks
 
 ```bash
+cd exercise2
+
+# Health check
+python scripts/benchmark.py --mode health
+
+# Single GPU benchmark
 python scripts/benchmark.py --mode single
-```
 
-Multi-GPU test (8 GPUs):
-
-```bash
+# Multi-GPU benchmark (8 GPUs)
 torchrun --nproc_per_node=8 scripts/benchmark.py --mode distributed
 ```
-
-## Repository Contents
-
-| File | Description |
-|------|-------------|
-| scripts/benchmark.py | Main benchmark script |
-| configs/benchmark_config.yaml | Benchmark configuration |
-| results/ | JSON benchmark results |
 
 ## Infrastructure
 
 | Setting | Value |
 |---------|-------|
+| Cloud Provider | Nebius AI Cloud |
 | Platform | gpu-h100-sxm |
 | Preset | 8gpu-128vcpu-1600gb |
 | Interconnect | NVLink |
