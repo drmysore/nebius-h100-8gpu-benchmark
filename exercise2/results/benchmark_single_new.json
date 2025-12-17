@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-12-15T14:48:30.899750Z",
+  "timestamp": "2025-12-16T02:47:09.709287Z",
   "cluster_info": {
     "hostname": "computeinstance-e00e9ncccc9zh9nxw2",
     "nodes": 1,
@@ -80,6 +80,46 @@
           "driver_version": "(9, 0)"
         }
       ]
+    },
+    "matmul_benchmark": {
+      "name": "matmul_benchmark",
+      "status": "PASS",
+      "metric_name": "tflops",
+      "metric_value": 730.97,
+      "metric_unit": "TFLOPS",
+      "duration_seconds": 1.66,
+      "details": {
+        "results_by_size": [
+          {
+            "size": 4096,
+            "tflops": 728.95,
+            "time_per_op_ms": 0.189
+          },
+          {
+            "size": 8192,
+            "tflops": 730.97,
+            "time_per_op_ms": 1.504
+          },
+          {
+            "size": 16384,
+            "tflops": 670.05,
+            "time_per_op_ms": 13.128
+          }
+        ],
+        "dtype": "torch.bfloat16"
+      }
+    },
+    "memory_bandwidth": {
+      "name": "memory_bandwidth",
+      "status": "PASS",
+      "metric_name": "bandwidth",
+      "metric_value": 3.02,
+      "metric_unit": "TB/s",
+      "duration_seconds": 0.04,
+      "details": {
+        "size_gb": 1.0,
+        "iterations": 50
+      }
     }
   },
   "overall_status": "PASS"

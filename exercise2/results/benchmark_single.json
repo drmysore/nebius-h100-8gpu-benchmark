@@ -1,7 +1,7 @@
 {
-  "timestamp": "2025-12-15T14:48:42.706983Z",
+  "timestamp": "2025-12-16T03:26:52.447561Z",
   "cluster_info": {
-    "hostname": "gpu-node-0",
+    "hostname": "computeinstance-e00e9ncccc9zh9nxw2",
     "nodes": 1,
     "gpus_per_node": 8,
     "total_gpus": 8,
@@ -85,25 +85,25 @@
       "name": "matmul_benchmark",
       "status": "PASS",
       "metric_name": "tflops",
-      "metric_value": 728.8,
+      "metric_value": 725.96,
       "metric_unit": "TFLOPS",
-      "duration_seconds": 1.67,
+      "duration_seconds": 1.68,
       "details": {
         "results_by_size": [
           {
             "size": 4096,
-            "tflops": 728.8,
+            "tflops": 725.96,
             "time_per_op_ms": 0.189
           },
           {
             "size": 8192,
-            "tflops": 673.61,
-            "time_per_op_ms": 1.632
+            "tflops": 682.09,
+            "time_per_op_ms": 1.612
           },
           {
             "size": 16384,
-            "tflops": 669.78,
-            "time_per_op_ms": 13.133
+            "tflops": 669.24,
+            "time_per_op_ms": 13.143
           }
         ],
         "dtype": "torch.bfloat16"

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-12-16T03:27:35.666843Z",
+  "timestamp": "2025-12-16T03:05:39.734449Z",
   "cluster_info": {
     "hostname": "computeinstance-e00e9ncccc9zh9nxw2",
     "nodes": 1,
@@ -15,31 +15,31 @@
       "name": "nccl_benchmark",
       "status": "PASS",
       "metric_name": "all_reduce_bandwidth",
-      "metric_value": 442.53,
+      "metric_value": 442.28,
       "metric_unit": "GB/s",
-      "duration_seconds": 5.09,
+      "duration_seconds": 5.44,
       "details": {
         "world_size": 8,
         "results_by_size": [
           {
             "size_mb": 1,
-            "bandwidth_gbps": 32.17,
-            "latency_ms": 0.057
+            "bandwidth_gbps": 47.46,
+            "latency_ms": 0.039
           },
           {
             "size_mb": 10,
-            "bandwidth_gbps": 203.67,
+            "bandwidth_gbps": 204.02,
             "latency_ms": 0.09
           },
           {
             "size_mb": 100,
-            "bandwidth_gbps": 386.76,
+            "bandwidth_gbps": 387.24,
             "latency_ms": 0.474
           },
           {
             "size_mb": 1000,
-            "bandwidth_gbps": 442.53,
-            "latency_ms": 4.147
+            "bandwidth_gbps": 442.28,
+            "latency_ms": 4.149
           }
         ]
       }
@@ -48,11 +48,11 @@
       "name": "training_benchmark",
       "status": "PASS",
       "metric_name": "tokens_per_second",
-      "metric_value": 331783.3,
+      "metric_value": 331842.0,
       "metric_unit": "tokens/s",
-      "duration_seconds": 6.98,
+      "duration_seconds": 7.04,
       "details": {
-        "tokens_per_gpu": 41472.9,
+        "tokens_per_gpu": 41480.2,
         "batch_size": 8,
         "seq_length": 512,
         "world_size": 8,

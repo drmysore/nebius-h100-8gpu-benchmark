@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-12-15T14:48:30.899750Z",
+  "timestamp": "2025-12-16T03:43:21.044664Z",
   "cluster_info": {
     "hostname": "computeinstance-e00e9ncccc9zh9nxw2",
     "nodes": 1,
@@ -80,7 +80,95 @@
           "driver_version": "(9, 0)"
         }
       ]
+    },
+    "matmul_benchmark": {
+      "name": "matmul_benchmark",
+      "status": "FAIL",
+      "metric_name": "tflops",
+      "metric_value": 74.32,
+      "metric_unit": "TFLOPS",
+      "duration_seconds": 14.99,
+      "details": {
+        "results_by_size": [
+          {
+            "size": 4096,
+            "tflops": 72.21,
+            "time_per_op_ms": 1.903
+          },
+          {
+            "size": 8192,
+            "tflops": 72.68,
+            "time_per_op_ms": 15.129
+          },
+          {
+            "size": 16384,
+            "tflops": 74.32,
+            "time_per_op_ms": 118.359
+          }
+        ],
+        "dtype": "torch.bfloat16"
+      }
+    },
+    "memory_bandwidth": {
+      "name": "memory_bandwidth",
+      "status": "FAIL",
+      "metric_name": "bandwidth",
+      "metric_value": 0.52,
+      "metric_unit": "TB/s",
+      "duration_seconds": 0.24,
+      "details": {
+        "size_gb": 1.0,
+        "iterations": 50
+      }
+    },
+    "nccl_benchmark": {
+      "name": "nccl_benchmark",
+      "status": "PASS",
+      "metric_name": "all_reduce_bandwidth",
+      "metric_value": 442.93,
+      "metric_unit": "GB/s",
+      "duration_seconds": 3.59,
+      "details": {
+        "world_size": 8,
+        "results_by_size": [
+          {
+            "size_mb": 1,
+            "bandwidth_gbps": 39.99,
+            "latency_ms": 0.046
+          },
+          {
+            "size_mb": 10,
+            "bandwidth_gbps": 203.2,
+            "latency_ms": 0.09
+          },
+          {
+            "size_mb": 100,
+            "bandwidth_gbps": 386.31,
+            "latency_ms": 0.475
+          },
+          {
+            "size_mb": 1000,
+            "bandwidth_gbps": 442.93,
+            "latency_ms": 4.143
+          }
+        ]
+      }
+    },
+    "training_benchmark": {
+      "name": "training_benchmark",
+      "status": "PASS",
+      "metric_name": "tokens_per_second",
+      "metric_value": 331772.1,
+      "metric_unit": "tokens/s",
+      "duration_seconds": 6.83,
+      "details": {
+        "tokens_per_gpu": 41471.5,
+        "batch_size": 8,
+        "seq_length": 512,
+        "world_size": 8,
+        "num_steps": 50
+      }
     }
   },
-  "overall_status": "PASS"
+  "overall_status": "FAIL"
 }

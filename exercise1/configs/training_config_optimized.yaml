@@ -1,0 +1,131 @@
+# training_config_optimized.yaml - Optimized training hyperparameters
+# See OPTIMIZATION.md for detailed explanation of changes
+
+# =============================================================================
+# Model Configuration
+# =============================================================================
+model:
+  name: "Qwen/Qwen2-7B-Instruct"
+  torch_dtype: "bfloat16"
+  attn_implementation: "flash_attention_2"
+  trust_remote_code: true
+
+# =============================================================================
+# LoRA Configuration
+# =============================================================================
+lora:
+  enabled: true
+  r: 64
+  lora_alpha: 128
+  lora_dropout: 0.05
+  target_modules:
+    - "q_proj"
+    - "k_proj"
+    - "v_proj"
+    - "o_proj"
+    - "gate_proj"
+    - "up_proj"
+    - "down_proj"
+  bias: "none"
+  task_type: "CAUSAL_LM"
+
+# =============================================================================
+# Training Parameters - OPTIMIZED
+# =============================================================================
+training:
+  # OPTIMIZED: Increased batch size to fill GPU memory
+  per_device_train_batch_size: 4    # Was 2
+  per_device_eval_batch_size: 4     # Was 2
+  gradient_accumulation_steps: 2    # Was 4
+  # Effective batch size = 4 * 2 * 16 GPUs = 128 (same total)
+
+  # Training duration
+  num_train_epochs: 1
+  max_steps: 100
+
+  # Learning rate
+  learning_rate: 2.0e-5
+  lr_scheduler_type: "cosine"
+  warmup_ratio: 0.03
+
+  # Optimization
+  optim: "adamw_torch_fused"
+  weight_decay: 0.01
+  max_grad_norm: 1.0
+
+  # Precision
+  bf16: true
+  fp16: false
+  tf32: true
+
+  # Checkpointing - keep enabled for memory efficiency
+  gradient_checkpointing: true
+  gradient_checkpointing_kwargs:
+    use_reentrant: false
+
+  # Logging
+  logging_steps: 10
+  logging_first_step: true
+  report_to:
+    - "tensorboard"
+
+  # Saving
+  save_strategy: "steps"
+  save_steps: 50
+  save_total_limit: 3
+  save_safetensors: true
+
+  # Evaluation
+  eval_strategy: "steps"
+  eval_steps: 50
+
+  # OPTIMIZED: Increased data loading parallelism
+  seed: 42
+  dataloader_num_workers: 8         # Was 4
+  dataloader_pin_memory: true
+  dataloader_prefetch_factor: 4     # New
+  remove_unused_columns: true
+  ddp_find_unused_parameters: false
+
+# =============================================================================
+# Data Configuration
+# =============================================================================
+data:
+  train_file: null
+  validation_file: null
+  test_file: null
+  max_seq_length: 4096
+  packing: true
+  preprocessing_num_workers: 8
+
+# =============================================================================
+# Output Configuration
+# =============================================================================
+output:
+  output_dir: "/home/supreethlab/training/checkpoints_optimized"
+  logging_dir: "/home/supreethlab/training/logs_optimized"
+  overwrite_output_dir: false
+  resume_from_checkpoint: null
+
+# =============================================================================
+# Distributed Training Configuration - OPTIMIZED
+# =============================================================================
+distributed:
+  # OPTIMIZED: Enable DeepSpeed ZeRO-3 for multi-node efficiency
+  deepspeed: "configs/ds_config_zero3_optimized.json"
+  ddp_backend: "nccl"
+  local_rank: -1
+
+# =============================================================================
+# Weights and Biases (optional)
+# =============================================================================
+wandb:
+  enabled: false
+  project: "llm-function-calling"
+  entity: null
+  name: null
+  tags:
+    - "function-calling"
+    - "qwen2"
+    - "lora"
+    - "optimized"
